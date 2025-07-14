@@ -1,0 +1,37 @@
+{
+  "name": "eventprotal",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/KrupaBhatia/EventProtal#readme",
+  "bugs": {
+    "url": "https://github.com/KrupaBhatia/EventProtal/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KrupaBhatia/EventProtal.git"
+  },
+  "license": "ISC",
+  "author": "krupa",
+  "type": "commonjs",
+  "main": "server.main",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.0",
+    "express": "^5.1.0",
+    "express-rate-limit": "^7.5.1",
+    "jsonwebtoken": "^9.0.2",
+    "luxon": "^3.7.1",
+    "moment": "^2.30.1",
+    "multer": "^2.0.1",
+    "mysql2": "^3.14.2",
+    "sequelize": "^6.37.7"
+  },
+  "devDependencies": {
+    "eslint": "^9.31.0",
+    "nodemon": "^3.1.10"
+  }
+}
