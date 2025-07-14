@@ -4,7 +4,7 @@ import db from './config/sequelize.js';
 
 dotenv.config();
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8001;
 
 db.sequelize.authenticate()
   .then(() => {

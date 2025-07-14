@@ -20,14 +20,14 @@ const sequelize = new Sequelize(
   }
 );
 
-// Define User model
+
 const User = sequelize.define('User', {
   username: { type: DataTypes.STRING, unique: true, allowNull: false },
   password: { type: DataTypes.STRING, allowNull: false },
   lastSessionToken: { type: DataTypes.STRING },
 });
 
-// Define Event model
+
 const Event = sequelize.define('Event', {
   title: { type: DataTypes.STRING, allowNull: false },
   description: { type: DataTypes.TEXT },
@@ -39,7 +39,7 @@ const Event = sequelize.define('Event', {
 
 const Category = sequelize.define('Category', {
   name: { type: DataTypes.STRING, allowNull: false },
-  parentId: { type: DataTypes.INTEGER, allowNull: true }, // self-referencing
+  parentId: { type: DataTypes.INTEGER, allowNull: true }, 
 });
 
 

@@ -30,34 +30,41 @@ export const createEvent = async (req, res) => {
   };
 
 
-
-
-
-export const getEvents = async (req, res) => {
-  try {
-    const timezone = req.query.timezone || 'UTC';
-    const now = DateTime.now().setZone(timezone);
-
-
-    console.log('Event associations:', Object.keys(Event.associations)); 
-
-    const events = await Event.findAll({
+  
+  export const getEvents = async (req, res) => {
+    try {
+      const timezone = req.query.timezone || 'UTC';
+      const status = req.query.status || 'all';
+      const now = DateTime.now().setZone(timezone);
+  
+      console.log('Event associations:', Object.keys(Event.associations));
+  
+      const events = await Event.findAll({
         where: { isDeleted: false },
         include: [
           {
             model: User,
-            as: 'user', 
+            as: 'user',
             attributes: ['id', 'username'],
           },
           {
             model: Category,
-            as: 'category', 
+            as: 'category',
             attributes: ['id', 'name'],
           },
         ],
       });
-
-      const formattedEvents = events.map(event => ({
+  
+      const filteredEvents = events.filter(event => {
+        const publishAt = DateTime.fromJSDate(event.publishAt).setZone(timezone);
+        const isPublished = publishAt <= now;
+  
+        if (status === 'published') return isPublished;
+        if (status === 'unpublished') return !isPublished;
+        return true;
+      });
+  
+      const formattedEvents = filteredEvents.map(event => ({
         id: event.id,
         title: event.title,
         description: event.description,
@@ -67,14 +74,14 @@ export const getEvents = async (req, res) => {
         publishAt: DateTime.fromJSDate(event.publishAt).setZone(timezone).toFormat('yyyy-MM-dd HH:mm:ss'),
         isPublished: DateTime.fromJSDate(event.publishAt).setZone(timezone) <= now,
       }));
-
-    res.status(200).json({ events: formattedEvents });
-  } catch (error) {
-    console.error('Get Events Error:', error);
-    res.status(500).json({ message: 'Internal Server Error' });
-  }
-};
-
+  
+      res.status(200).json({ events: formattedEvents });
+    } catch (error) {
+      console.error('Get Events Error:', error);
+      res.status(500).json({ message: 'Internal Server Error' });
+    }
+  };
+  
 
 export const deleteEvent = async (req, res) => {
     const { id } = req.params;
